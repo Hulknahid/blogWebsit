@@ -1,20 +1,16 @@
 import React from "react";
+import { Container } from "reactstrap";
 import Base from "../../../Base";
+import AddPost from "../../Category/AppPost";
 
 const UserDashboard = () => {
   return (
     <Base>
-      <div>
-        <h1>Welcome to our dash board</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa dolore
-          dolorem ipsum, veniam enim exercitationem, ullam recusandae optio ab
-          est alias fugit, quo doloremque ea! Ea saepe dolores consectetur ad
-          accusamus quo? Nostrum nulla cumque libero? Ad tenetur vitae amet
-          veritatis, illo distinctio architecto dolorem asperiores ducimus.
-          Nemo, consequuntur commodi.
-        </p>
-      </div>
+      <Container>
+        <div>
+          <AddPost />
+        </div>
+      </Container>
     </Base>
   );
 };

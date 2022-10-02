@@ -1,9 +1,11 @@
+import { SetAuthToken } from "../Component/Services/Helper";
 //isLogged in
 export const isLogged = () => {
   const data = localStorage.getItem("data");
   if (data == null) {
     return false;
   } else {
+    SetAuthToken();
     return true;
   }
 };
@@ -11,6 +13,7 @@ export const isLogged = () => {
 
 export const doLogin = (data, next) => {
   localStorage.setItem("data", JSON.stringify(data));
+  SetAuthToken();
   next();
 };
 //do logout remove from localstorage

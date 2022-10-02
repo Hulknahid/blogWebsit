@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import About from "./Component/pages/About";
 import Home from "./Component/pages/Home";
 import Login from "./Component/pages/Login";
@@ -10,8 +10,11 @@ import { ToastContainer } from "react-toastify";
 import Privateroute from "./Component/Privateroute";
 import UserDashboard from "./Component/pages/UserRoute/UserDashboard";
 import ProfileInfo from "./Component/pages/UserRoute/ProfileInfo";
-
+import { isLogged } from "./auth";
 const App = () => {
+  useEffect(() => {
+    isLogged();
+  }, []);
   return (
     <div>
       <ToastContainer />
