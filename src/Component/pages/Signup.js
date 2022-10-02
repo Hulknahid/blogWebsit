@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   Card,
@@ -17,6 +18,7 @@ import {
 import Base from "../../Base";
 import { signup } from "../Services/user-service";
 const Signup = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -38,6 +40,7 @@ const Signup = () => {
     signup(data)
       .then((response) => {
         console.log("Success", response);
+        navigate("/login");
         toast.success("Register successfully");
       })
       .catch((error) => {
