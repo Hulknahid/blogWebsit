@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardBody,
@@ -12,10 +12,12 @@ import {
 import { allCategories } from "../Services/user-category";
 
 const AddPost = () => {
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     allCategories()
       .then((response) => {
         console.log(response);
+        setCategories(response);
       })
       .catch((error) => {
         console.log(error);
@@ -54,11 +56,13 @@ const AddPost = () => {
                 id="category"
                 placeholder="Enter here"
               >
-                <option>Programing</option>
-                <option>Web Development</option>
-                <option>Math</option>
-                <option>Friction</option>
-                <option>Bollywood</option>
+                {categories.map((myData, id) => {
+                  return (
+                    <option key={myData.categoryId}>
+                      {myData.categoryTitle}
+                    </option>
+                  );
+                })}
               </Input>
             </FormGroup>
             <Container className="text-center">
