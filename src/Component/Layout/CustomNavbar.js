@@ -75,7 +75,7 @@ function CustomNavbar(args) {
                 </NavItem>
                 <NavItem>
                   <NavLink to="/user/dashboard" tag={ReactLink}>
-                    {user.email}
+                    {user?.email}
                   </NavLink>
                 </NavItem>
                 <NavItem>

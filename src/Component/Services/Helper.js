@@ -20,6 +20,7 @@ export const myAxios = axios.create({
 
 export const SetAuthToken = () => {
   const token = JSON.parse(localStorage.getItem("data"));
+  // console.log(token);
   if (token) {
     myAxios.defaults.headers.common[
       "Authorization"

@@ -1,11 +1,12 @@
 import React from "react";
 import Base from "../../Base";
+import FeedBack from "./FeedBack/FeedBack";
 
 const Home = () => {
   return (
     <div>
       <Base>
-        <h1>Home pages</h1>
+        <FeedBack />
       </Base>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Card,
   CardBody,
@@ -10,25 +10,69 @@ import {
   Button,
 } from "reactstrap";
 import { allCategories } from "../Services/user-category";
-
+import JoditEditor from "jodit-react";
+import { createPost } from "../Services/user-createPost";
+import { getCurrentUserDetails } from "../Auth/Index";
 const AddPost = () => {
+  const editor = useRef(null);
+  const [post, setPost] = useState({
+    title: "",
+    content: "",
+    categoryId: "",
+  });
+  const { title, content, categoryId } = post;
+  const [user, setUser] = useState(undefined);
   const [categories, setCategories] = useState([]);
   useEffect(() => {
+    setUser(getCurrentUserDetails());
     allCategories()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setCategories(response);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    // console.log(name);
+    setPost({ ...post, [name]: value });
+  };
+  const contentChangeHandler = (data) => {
+    setPost({ ...post, content: data });
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (title.trim() === "") {
+      alert("Title is Required");
+    }
+    if (content.trim() === "") {
+      alert("Content is Required");
+    }
+    if (categoryId.trim() === "") {
+      alert("CategoryId is Required");
+    }
+
+    console.log(post);
+    post["userId"] = user.id;
+    createPost(post)
+      .then((response) => {
+        console.log(response);
+        setPost(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  // console.log("post", post);
   return (
     <div className="wrapper">
       <Card>
+        {JSON.stringify(post)}
         <CardBody>
           <h1>Hulk Nahid</h1>
-          <Form>
+          <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label for="title">Post Title</Label>
               <Input
@@ -36,29 +80,35 @@ const AddPost = () => {
                 name="title"
                 id="title"
                 placeholder="Enter here"
+                onChange={changeHandler}
               />
             </FormGroup>
             <FormGroup>
               <Label for="content">Post Content</Label>
-              <Input
-                type="textarea"
-                name="content"
-                id="content"
-                placeholder="Enter here"
-                style={{ height: "300px" }}
+              <JoditEditor
+                ref={editor}
+                value={content}
+                onChange={contentChangeHandler}
               />
             </FormGroup>
             <FormGroup>
-              <Label for="category">Post Category</Label>
+              <Label for="categoryId">Post Category</Label>
               <Input
                 type="select"
-                name="category"
-                id="category"
+                name="categoryId"
+                id="categoryId"
                 placeholder="Enter here"
+                onChange={changeHandler}
+                defaultValue={0}
               >
-                {categories.map((myData, id) => {
+                <option disabled value={0}>
+                  --Select Any One--
+                </option>
+
+                {categories?.map((myData) => {
+                  // console.log("myData", myData);
                   return (
-                    <option key={myData.categoryId}>
+                    <option value={myData.categoryId} key={myData.categoryId}>
                       {myData.categoryTitle}
                     </option>
                   );
@@ -66,7 +116,9 @@ const AddPost = () => {
               </Input>
             </FormGroup>
             <Container className="text-center">
-              <Button className="btn btn-success">Create Post</Button>
+              <Button type="submit" className="btn btn-success">
+                Create Post
+              </Button>
               <Button className="btn btn-danger ms-2">Content reset</Button>
             </Container>
           </Form>
