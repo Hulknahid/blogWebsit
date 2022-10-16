@@ -12,7 +12,7 @@ import {
 import { allCategories } from "../Services/user-category";
 import JoditEditor from "jodit-react";
 import { createPost } from "../Services/user-createPost";
-import { getCurrentUserDetails } from "../Auth/Index";
+import { getCurrentUserDetails } from "../../auth/index";
 const AddPost = () => {
   const editor = useRef(null);
   const [post, setPost] = useState({
@@ -54,7 +54,7 @@ const AddPost = () => {
       alert("CategoryId is Required");
     }
 
-    console.log(post);
+    console.log("post", post);
     post["userId"] = user.id;
     createPost(post)
       .then((response) => {
