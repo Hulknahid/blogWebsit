@@ -22,19 +22,28 @@ const FeedBack = () => {
     content: [],
   });
   useEffect(() => {
-    getAllPost(0, 5)
-      .then((response) => {
-        console.log(response);
-        setPostContent(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // getAllPost(0, 5)
+    //   .then((response) => {
+    //     console.log(response);
+    //     setPostContent(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    changePage(0);
   }, []);
   const changePage = (pageNumber = 0, pageSize = 5) => {
+    // console.log(pageNumber);
+    // console.log(postContent.pageNumber);
+    if (pageNumber > postContent.pageNumber && postContent.lastPage) {
+      return;
+    }
+    if (pageNumber < postContent.pageNumber && postContent.pageNumber == 0) {
+      return;
+    }
     getAllPost(pageNumber, pageSize)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setPostContent(response);
       })
       .catch((error) => {
@@ -56,7 +65,7 @@ const FeedBack = () => {
                 <PaginationItem
                   disabled={postContent.pageNumber === 0}
                   onClick={() => {
-                    changePage(--postContent.pageNumber);
+                    changePage(postContent.pageNumber - 1);
                   }}
                 >
                   <PaginationLink>Previous</PaginationLink>
@@ -77,7 +86,7 @@ const FeedBack = () => {
                 <PaginationItem
                   disabled={postContent.lastPage}
                   onClick={() => {
-                    changePage(++postContent.pageNumber);
+                    changePage(postContent.pageNumber + 1);
                   }}
                 >
                   <PaginationLink>Next</PaginationLink>

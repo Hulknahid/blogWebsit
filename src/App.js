@@ -11,6 +11,7 @@ import Privateroute from "./Component/Privateroute";
 import UserDashboard from "./Component/pages/UserRoute/UserDashboard";
 import ProfileInfo from "./Component/pages/UserRoute/ProfileInfo";
 import { isLogged } from "./auth";
+import PostPage from "./Component/pages/PostPage/PostPage";
 const App = () => {
   useEffect(() => {
     isLogged();
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/posts/:postId" element={<PostPage />} />
         <Route path="/user" element={<Privateroute />}>
           <Route path="dashboard" element={<UserDashboard />} />
           <Route path="profileInfo" element={<ProfileInfo />} />

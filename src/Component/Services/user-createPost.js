@@ -30,6 +30,15 @@ export const createPost = (user) => {
 
 export const getAllPost = (pageNumber, pageSize) => {
   return myAxios
-    .get(`/api/post?pageNumber=${pageNumber}&pageSize=${pageSize}`)
+    .get(
+      `/api/post?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=createdAt&sortDir=dese`
+    )
+    .then((response) => response.data);
+};
+
+export const loadPost = (postId) => {
+  console.log(postId);
+  return myAxios
+    .get(`/api/post/postId=${postId}`)
     .then((response) => response.data);
 };
