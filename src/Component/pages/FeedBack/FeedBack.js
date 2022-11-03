@@ -103,22 +103,102 @@
 
 // export default FeedBack;
 //***************Infinite scroll section***************** //
+// import React from "react";
+// import { useState } from "react";
+// import { useEffect } from "react";
+// import InfiniteScroll from "react-infinite-scroll-component";
+// import { useParams } from "react-router-dom";
+// import { Col, Container, Row } from "reactstrap";
+// import { getAllPost } from "../../Services/user-createPost";
+// import Post from "./Post";
+
+// const FeedBack = () => {
+//   const [postContent, setPostContent] = useState({
+//     content: [],
+//     pageNumber: "",
+//     pageSize: "",
+//     totalPages: "",
+//     lastPage: false,
+//   });
+//   const [currentPage, setCurrentPage] = useState(0);
+//   useEffect(() => {
+//     changePage(currentPage);
+//   }, [currentPage]);
+//   const changePage = (pageNumber = 0, pageSize = 5) => {
+//     if (pageNumber > postContent.pageNumber && postContent.lastPage) {
+//       return;
+//     }
+//     if (pageNumber < postContent.pageNumber && postContent.pageNumber == 0) {
+//       return;
+//     }
+//     getAllPost(pageNumber, pageSize)
+//       .then((response) => {
+//         console.log(postContent.content);
+//         console.log(response.data);
+//         // setPostContent(response);
+//         setPostContent({
+//           content: [...postContent.content, ...response.data],
+//           pageNumber: response.pageNumber,
+//           pageSize: response.pageSize,
+//           totalPages: response.totalPages,
+//           lastPage: response.lastPage,
+//         });
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   };
+//   console.log(currentPage + 1);
+//   const changePageInfiti = () => {
+//     console.log("Infinite scroll");
+//     setCurrentPage(currentPage + 1);
+//   };
+//   return (
+//     <div>
+//       <Container className="text-center my-2">
+//         <Row>
+//           <Col md={{ size: 10, offset: 1 }}>
+//             <h1>Blog Count ({postContent?.totalRecords})</h1>
+//             <InfiniteScroll
+//               dataLength={postContent.content.length}
+//               next={changePageInfiti}
+//               hasMore={!postContent.lastPage}
+//             >
+//               {postContent?.content?.map((myData) => {
+//                 return <Post sent={myData} key={myData?.postId} />;
+//               })}
+//             </InfiniteScroll>
+//           </Col>
+//         </Row>
+//       </Container>
+//     </div>
+//   );
+// };
+
+// export default FeedBack;
+
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
-import { Col, Container, Row } from "reactstrap";
+import {
+  Col,
+  Container,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  Row,
+} from "reactstrap";
 import { getAllPost } from "../../Services/user-createPost";
 import Post from "./Post";
-
+import InfiniteScroll from "react-infinite-scroll-component";
 const FeedBack = () => {
   const [postContent, setPostContent] = useState({
-    content: [],
     pageNumber: "",
     pageSize: "",
     totalPages: "",
     lastPage: false,
+    content: [],
   });
   const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
@@ -133,23 +213,21 @@ const FeedBack = () => {
     }
     getAllPost(pageNumber, pageSize)
       .then((response) => {
-        console.log(postContent.content);
-        console.log(response.data);
         // setPostContent(response);
         setPostContent({
           content: [...postContent.content, ...response.data],
-          pageNumber: response.pageNumber,
-          pageSize: response.pageSize,
-          totalPages: response.totalPages,
-          lastPage: response.lastPage,
+          pageNumber: postContent.pageNumber,
+          pageSize: postContent.pageSize,
+          totalPages: postContent.totalPages,
+          lastPage: postContent.lastPage,
         });
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const changePageInfiti = () => {
-    console.log("Infinite scroll");
+  const changePageInfite = () => {
+    console.log("scroll");
     setCurrentPage(currentPage + 1);
   };
   return (
@@ -160,11 +238,11 @@ const FeedBack = () => {
             <h1>Blog Count ({postContent?.totalRecords})</h1>
             <InfiniteScroll
               dataLength={postContent.content?.length}
-              next={changePageInfiti}
+              next={changePageInfite}
               hasMore={!postContent.lastPage}
             >
-              {postContent?.data?.map((myData) => {
-                return <Post sent={myData} key={myData?.postId} />;
+              {postContent?.content?.map((myData) => {
+                return <Post sent={myData} key={myData.postId} />;
               })}
             </InfiniteScroll>
           </Col>

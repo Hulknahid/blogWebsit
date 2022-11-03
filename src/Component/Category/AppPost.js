@@ -65,6 +65,10 @@ const AddPost = () => {
         console.log(error);
       });
   };
+  const [imageFile, setImageFile] = useState(null);
+  const changeHandlerFile = (e) => {
+    console.log(e.target.files[0]);
+  };
   // console.log("post", post);
   return (
     <div className="wrapper">
@@ -89,6 +93,16 @@ const AddPost = () => {
                 ref={editor}
                 value={content}
                 onChange={contentChangeHandler}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="image">Upload Image</Label>
+              <Input
+                type="file"
+                name="image"
+                id="image"
+                placeholder="Enter here"
+                onChange={changeHandlerFile}
               />
             </FormGroup>
             <FormGroup>
