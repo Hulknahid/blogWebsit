@@ -13,6 +13,8 @@ import { allCategories } from "../Services/user-category";
 import JoditEditor from "jodit-react";
 import { createPost } from "../Services/user-createPost";
 import { getCurrentUserDetails } from "../../auth/index";
+import { uploadPostImage } from "../Services/PostComment";
+import { toast } from "react-toastify";
 const AddPost = () => {
   const editor = useRef(null);
   const [post, setPost] = useState({
@@ -20,6 +22,8 @@ const AddPost = () => {
     content: "",
     categoryId: "",
   });
+  const [image, setImage] = useState(null);
+
   const { title, content, categoryId } = post;
   const [user, setUser] = useState(undefined);
   const [categories, setCategories] = useState([]);
@@ -54,20 +58,29 @@ const AddPost = () => {
       alert("CategoryId is Required");
     }
 
-    console.log("post", post);
+    // console.log("post", post.postId);
     post["userId"] = user.id;
     createPost(post)
       .then((response) => {
         console.log(response);
         setPost(response);
+        uploadPostImage(image, response.postId)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        toast.success("Post create successFully");
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const [imageFile, setImageFile] = useState(null);
-  const changeHandlerFile = (e) => {
+  // Image upload in react
+  const handlerFileChange = (e) => {
     console.log(e.target.files[0]);
+    setImage(e.target.files[0]);
   };
   // console.log("post", post);
   return (
@@ -99,10 +112,9 @@ const AddPost = () => {
               <Label for="image">Upload Image</Label>
               <Input
                 type="file"
-                name="image"
                 id="image"
                 placeholder="Enter here"
-                onChange={changeHandlerFile}
+                onChange={handlerFileChange}
               />
             </FormGroup>
             <FormGroup>

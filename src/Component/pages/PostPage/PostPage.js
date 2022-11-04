@@ -48,6 +48,7 @@ const PostPage = () => {
         console.log(error);
       });
   };
+  // console.log(post.postImage);
   // add comment section
   const [addComments, setAddComments] = useState({
     comment: "",
@@ -94,7 +95,7 @@ const PostPage = () => {
                   </CardText>
                   <h3>Post Title: {post.title}</h3>
                   <div>
-                    <img src={post.postImage} alt="" />
+                    {/* <img src={post.postImage} alt="Post Image" /> */}
                   </div>
                   <div>
                     <p>Post Description: {post.description}</p>
