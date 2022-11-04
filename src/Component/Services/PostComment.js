@@ -13,14 +13,26 @@ export const createComments = (addComments, postId) => {
     .then((response) => response.data);
 };
 
+// export const uploadPostImage = (image, postId) => {
+//   // console.log(image);
+//   let formData = new FormData();
+//   formData.append("image", image);
+//   return myAxios
+//     .post(`/api/file/upload/${postId}`, formData, {
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//       },
+//     })
+//     .then((response) => response.data);
+// };
+
 export const uploadPostImage = (image, postId) => {
-  // console.log(image);
   let formData = new FormData();
   formData.append("image", image);
   return myAxios
     .post(`/api/file/upload/${postId}`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "multipart/data-form",
       },
     })
     .then((response) => response.data);

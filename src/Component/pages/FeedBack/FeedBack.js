@@ -230,24 +230,23 @@ const FeedBack = () => {
     console.log("scroll");
     setCurrentPage(currentPage + 1);
   };
+  console.log(postContent);
   return (
     <div>
-      <Container className="text-center my-2">
-        <Row>
-          <Col md={{ size: 10, offset: 1 }}>
-            <h1>Blog Count ({postContent?.totalRecords})</h1>
-            <InfiniteScroll
-              dataLength={postContent.content?.length}
-              next={changePageInfite}
-              hasMore={!postContent.lastPage}
-            >
-              {postContent?.content?.map((myData) => {
-                return <Post sent={myData} key={myData.postId} />;
-              })}
-            </InfiniteScroll>
-          </Col>
-        </Row>
-      </Container>
+      <Row className="text-center">
+        <Col md={12} className="me-0">
+          <h1>Blog Count ({postContent.content.length})</h1>
+          <InfiniteScroll
+            dataLength={postContent.content?.length}
+            next={changePageInfite}
+            hasMore={!postContent.lastPage}
+          >
+            {postContent?.content?.map((myData) => {
+              return <Post sent={myData} key={myData.postId} />;
+            })}
+          </InfiniteScroll>
+        </Col>
+      </Row>
     </div>
   );
 };
