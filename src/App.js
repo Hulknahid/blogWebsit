@@ -12,6 +12,7 @@ import UserDashboard from "./Component/pages/UserRoute/UserDashboard";
 import ProfileInfo from "./Component/pages/UserRoute/ProfileInfo";
 import { isLogged } from "./auth";
 import PostPage from "./Component/pages/PostPage/PostPage";
+import Categories from "./Component/pages/Categories/Categories";
 const App = () => {
   useEffect(() => {
     isLogged();
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/posts/:postId" element={<PostPage />} />
+        <Route path="/category/:categoryId" element={<Categories />} />
         <Route path="/user" element={<Privateroute />}>
           <Route path="dashboard" element={<UserDashboard />} />
           <Route path="profileInfo" element={<ProfileInfo />} />

@@ -42,3 +42,10 @@ export const loadPost = (postId) => {
     .get(`/api/post/postId=${postId}`)
     .then((response) => response.data);
 };
+
+export const loadPostCategoryWise = (categoryId) => {
+  // console.log(categoryId);
+  return myAxios
+    .get(`/api/post/category/${categoryId.categoryId}`)
+    .then((response) => response.data);
+};

@@ -230,7 +230,7 @@ const FeedBack = () => {
     console.log("scroll");
     setCurrentPage(currentPage + 1);
   };
-  console.log(postContent);
+  // console.log(postContent);
   return (
     <div>
       <Row className="text-center">
