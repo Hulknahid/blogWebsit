@@ -49,3 +49,17 @@ export const loadPostCategoryWise = (categoryId) => {
     .get(`/api/post/category/${categoryId.categoryId}`)
     .then((response) => response.data);
 };
+
+export const loadPostUserWise = (userId) => {
+  // console.log(userId);
+  return myAxios
+    .get(`/api/post/user=${userId}`)
+    .then((response) => response.data);
+};
+
+export const deletePostWise = (postId) => {
+  console.log(postId);
+  return myAxios
+    .delete(`/api/post/${postId}`)
+    .then((response) => response.data);
+};

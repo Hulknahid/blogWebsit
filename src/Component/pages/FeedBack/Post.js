@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, CardBody, CardText } from "reactstrap";
+import { getCurrentUserDetails, isLogged } from "../../../auth";
 
-const Post = (receive = { title: "Title" }) => {
-  // console.log(receive);
+const Post = ({ sent, deleteMypost }) => {
+  const [users, setUsers] = useState();
+  const [login, setLogin] = useState(false);
+  useEffect(() => {
+    setUsers(getCurrentUserDetails());
+    setLogin(isLogged());
+  }, []);
   return (
     <div>
       <Card className="border-0 shadow-sm mt-3">
         <CardBody>
-          <h3>Title: {receive.sent.title}</h3>
-          <CardText>Description: {receive.sent.description}...</CardText>
-          <Link
-            className="btn btn-success"
-            to={`/posts/${receive.sent.postId}`}
-          >
+          <h3>Title: {sent.title}</h3>
+          <CardText>Description: {sent.description}...</CardText>
+          <Link className="btn btn-success" to={`/posts/${sent.postId}`}>
             Read More
           </Link>
+          {login &&
+            (users && users.id === sent.users.id ? (
+              <Button
+                color="danger"
+                className="ms-2"
+                onClick={() => {
+                  deleteMypost(sent.postId);
+                }}
+              >
+                Delete
+              </Button>
+            ) : (
+              ""
+            ))}
         </CardBody>
       </Card>
     </div>
@@ -23,25 +40,3 @@ const Post = (receive = { title: "Title" }) => {
 };
 
 export default Post;
-
-// import React from "react";
-// import { Card, CardBody, CardText, Button } from "reactstrap";
-
-// function Post(receive) {
-//   return (
-//     <div>
-//       <Card className="border-0 shadow-sm mt-3">
-//         <CardBody>
-//           <h3>{receive.sent.title}</h3>
-//           <CardText
-//             dangerouslySetInnerHTML={{ __html: receive.sent.description }}
-//           ></CardText>
-//           <Button>Read More</Button>
-//           <Button color="danger ms-2">Delete</Button>
-//         </CardBody>
-//       </Card>
-//     </div>
-//   );
-// }
-
-// export default Post;

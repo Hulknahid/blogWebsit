@@ -1,15 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "reactstrap";
+import { getCurrentUserDetails } from "../../../auth";
 import Base from "../../../Base";
 import AddPost from "../../Category/AppPost";
-
+import {
+  deletePostWise,
+  loadPostUserWise,
+} from "../../Services/user-createPost";
+import Post from "../FeedBack/Post";
 const UserDashboard = () => {
+  const [user, setUser] = useState({});
+  const [posts, setposts] = useState([]);
+  // console.log(posts[0].postId);
+  // console.log(posts[0].postId);
+  useEffect(() => {
+    // console.log(getCurrentUserDetails());
+    setUser(getCurrentUserDetails());
+
+    loadPostUserWise(getCurrentUserDetails().id)
+      .then((response) => {
+        console.log(response);
+        setposts(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  const deleteMypost = (postId) => {
+    deletePostWise(postId)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <Base>
       <Container>
-        <div>
-          <AddPost />
-        </div>
+        <AddPost />
+        <span className="my-3">
+          {posts &&
+            posts?.map((myData, index) => {
+              return (
+                <Post sent={myData} key={index} deleteMypost={deleteMypost} />
+              );
+            })}
+        </span>
       </Container>
     </Base>
   );
