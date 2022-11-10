@@ -189,7 +189,7 @@ import {
   PaginationLink,
   Row,
 } from "reactstrap";
-import { getAllPost } from "../../Services/user-createPost";
+import { deletePostWise, getAllPost } from "../../Services/user-createPost";
 import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 const FeedBack = () => {
@@ -230,6 +230,22 @@ const FeedBack = () => {
     console.log("scroll");
     setCurrentPage(currentPage + 1);
   };
+  const deleteMypost = (postId) => {
+    deletePostWise(postId)
+      .then((response) => {
+        console.log(response);
+        setPostContent((prev) => {
+          console.log(prev);
+          return {
+            ...postContent,
+            content: prev.content.filter((post) => post.postId !== postId),
+          };
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   // console.log(postContent);
   return (
     <div>
@@ -242,7 +258,13 @@ const FeedBack = () => {
             hasMore={!postContent.lastPage}
           >
             {postContent?.content?.map((myData) => {
-              return <Post sent={myData} key={myData.postId} />;
+              return (
+                <Post
+                  sent={myData}
+                  key={myData.postId}
+                  deleteMypost={deleteMypost}
+                />
+              );
             })}
           </InfiniteScroll>
         </Col>

@@ -11,10 +11,7 @@ import Post from "../FeedBack/Post";
 const UserDashboard = () => {
   const [user, setUser] = useState({});
   const [posts, setposts] = useState([]);
-  // console.log(posts[0].postId);
-  // console.log(posts[0].postId);
   useEffect(() => {
-    // console.log(getCurrentUserDetails());
     setUser(getCurrentUserDetails());
 
     loadPostUserWise(getCurrentUserDetails().id)
@@ -30,6 +27,7 @@ const UserDashboard = () => {
     deletePostWise(postId)
       .then((response) => {
         console.log(response);
+        setposts((prev) => prev.filter((post) => post.postId !== postId));
       })
       .catch((error) => {
         console.log(error);
