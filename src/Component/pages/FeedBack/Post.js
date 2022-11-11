@@ -41,12 +41,16 @@
 // export default Post;
 
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, CardBody, CardText } from "reactstrap";
 import { getCurrentUserDetails, isLogged } from "../../../auth";
+import userContext from "../../../Context/UserContext";
 
 const Post = ({ sent, deleteMypost }) => {
   // console.log(sent.postId);
+  const userContextData = useContext(userContext);
+  console.log(userContextData);
   const [user, setUser] = useState();
   const [login, setLogin] = useState(false);
   useEffect(() => {
@@ -62,7 +66,7 @@ const Post = ({ sent, deleteMypost }) => {
           <Link className="btn btn-success" to={`/posts/${sent.postId}`}>
             Read More
           </Link>
-          {login &&
+          {userContextData.user.login &&
             (user.id === sent.users.id ? (
               <Button
                 color="danger"

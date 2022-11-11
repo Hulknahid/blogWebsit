@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -16,8 +17,11 @@ import {
 } from "reactstrap";
 import { doLogin } from "../../auth";
 import Base from "../../Base";
+import userContext from "../../Context/UserContext";
 import { login } from "../Services/user-service";
 const Login = () => {
+  const userContextData = useContext(userContext);
+  console.log("userContextData", userContextData);
   const navigator = useNavigate();
   const [data, setData] = useState({
     email: "",
@@ -41,6 +45,10 @@ const Login = () => {
         //login data save in localstorage
         doLogin(data, () => {
           console.log("Login details is saved to localstorage");
+          userContextData.setUser({
+            data: data.user,
+            login: true,
+          });
           navigator("/user/dashboard");
         });
         toast.success("Login successfully");

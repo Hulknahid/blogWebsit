@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useContext } from "react";
 import { useEffect } from "react";
 import { NavLink as ReactLink, useNavigate } from "react-router-dom";
 import {
@@ -16,8 +17,10 @@ import {
   NavbarText,
 } from "reactstrap";
 import { doLogout, getCurrentUserDetails, isLogged } from "../../auth";
+import userContext from "../../Context/UserContext";
 
 function CustomNavbar(args) {
+  const userContextData = useContext(userContext);
   const navigator = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -30,6 +33,10 @@ function CustomNavbar(args) {
   const logout = () => {
     doLogout(() => {
       setLogin(false);
+      userContextData.setUser({
+        data: null,
+        login: false,
+      });
       navigator("/");
     });
   };
