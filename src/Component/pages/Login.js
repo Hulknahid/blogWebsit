@@ -46,7 +46,7 @@ const Login = () => {
         doLogin(data, () => {
           console.log("Login details is saved to localstorage");
           userContextData.setUser({
-            data: data.user,
+            data: data,
             login: true,
           });
           navigator("/user/dashboard");
@@ -55,11 +55,6 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
-        if (error.response.status == 400 || error.response.status == 403) {
-          toast.error(error.message);
-        } else {
-          toast.error("Something went to wrong");
-        }
       });
   };
   const resetData = () => {

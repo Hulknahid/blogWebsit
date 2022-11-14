@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import About from "./Component/pages/About";
 import Home from "./Component/pages/Home";
 import Login from "./Component/pages/Login";
@@ -13,9 +13,13 @@ import ProfileInfo from "./Component/pages/UserRoute/ProfileInfo";
 import { isLogged } from "./auth";
 import PostPage from "./Component/pages/PostPage/PostPage";
 import Categories from "./Component/pages/Categories/Categories";
+import userContext from "./Context/UserContext";
 const App = () => {
+  const userContextData = useContext(userContext);
   useEffect(() => {
-    isLogged();
+    let data = isLogged();
+    userContextData.setUser({ data: data, login: true });
+    return true;
   }, []);
   return (
     <div>

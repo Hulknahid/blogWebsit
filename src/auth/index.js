@@ -6,7 +6,7 @@ export const isLogged = () => {
     return false;
   } else {
     SetAuthToken();
-    return true;
+    return data;
   }
 };
 //doLogin data set a localstorage
