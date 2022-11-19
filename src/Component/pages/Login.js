@@ -46,7 +46,7 @@ const Login = () => {
         doLogin(data, () => {
           console.log("Login details is saved to localstorage");
           userContextData.setUser({
-            data: data,
+            data: data.users,
             login: true,
           });
           navigator("/user/dashboard");

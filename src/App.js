@@ -14,12 +14,16 @@ import { isLogged } from "./auth";
 import PostPage from "./Component/pages/PostPage/PostPage";
 import Categories from "./Component/pages/Categories/Categories";
 import userContext from "./Context/UserContext";
+import UpdateUserPost from "./Component/pages/UpdateUserPost/UpdateUserPost";
 const App = () => {
-  const userContextData = useContext(userContext);
+  // const userContextData = useContext(userContext);
+  // useEffect(() => {
+  //   let data = isLogged();
+  //   userContextData.setUser({ data: data, login: true });
+  //   return true;
+  // }, []);
   useEffect(() => {
-    let data = isLogged();
-    userContextData.setUser({ data: data, login: true });
-    return true;
+    isLogged();
   }, []);
   return (
     <div>
@@ -34,6 +38,7 @@ const App = () => {
         <Route path="/user" element={<Privateroute />}>
           <Route path="dashboard" element={<UserDashboard />} />
           <Route path="profileInfo" element={<ProfileInfo />} />
+          <Route path="updateuserpost/:postId" element={<UpdateUserPost />} />
         </Route>
       </Routes>
     </div>

@@ -37,7 +37,7 @@ export const getAllPost = (pageNumber, pageSize) => {
 };
 
 export const loadPost = (postId) => {
-  console.log(postId);
+  // console.log(postId);
   return myAxios
     .get(`/api/post/postId=${postId}`)
     .then((response) => response.data);
@@ -61,5 +61,15 @@ export const deletePostWise = (postId) => {
   console.log(postId);
   return myAxios
     .delete(`/api/post/${postId}`)
+    .then((response) => response.data);
+};
+
+export const updatePost = (post) => {
+  console.log("postDetails", post);
+  return myAxios
+    .post(
+      `/api/post/userId/${post.users.id}/categoryId/${post.category.categoryId}`,
+      post
+    )
     .then((response) => response.data);
 };

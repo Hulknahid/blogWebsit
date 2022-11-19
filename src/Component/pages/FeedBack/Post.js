@@ -8,13 +8,14 @@ import userContext from "../../../Context/UserContext";
 const Post = ({ sent, deleteMypost }) => {
   // console.log(sent.postId);
   const userContextData = useContext(userContext);
-  console.log("HERERERER", userContextData);
+  // console.log("HERERERER", userContextData);
   const [user, setUser] = useState();
   const [login, setLogin] = useState(false);
   useEffect(() => {
     setUser(getCurrentUserDetails());
     setLogin(isLogged());
   }, []);
+
   return (
     <div>
       <Card className="border-0 shadow-sm mt-3">
@@ -34,6 +35,19 @@ const Post = ({ sent, deleteMypost }) => {
                 }}
               >
                 Delete
+              </Button>
+            ) : (
+              ""
+            ))}
+          {userContextData.user.login &&
+            (user?.id === sent?.users?.id ? (
+              <Button
+                color="warning"
+                className="ms-2"
+                tag={Link}
+                to={`updateuserpost/${sent.postId}`}
+              >
+                Update
               </Button>
             ) : (
               ""
